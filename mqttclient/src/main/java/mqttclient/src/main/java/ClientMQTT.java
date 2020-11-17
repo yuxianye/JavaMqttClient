@@ -1,4 +1,8 @@
+package mqttclient.src.main.java;
+import java.io.ByteArrayInputStream;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -12,13 +16,21 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class ClientMQTT {
 
-    public static final String HOST = "tcp://12700.0.1:1883";
-    public static final String TOPIC1 = "brand/type/group/code";
+    public static void main(String[] args) {
+        ClientMQTT client = new ClientMQTT();
+        client.start();
+
+        Byte[] b = new Byte[1024];
+        b[0] = 1;
+    }
+
+    public static final String HOST = "tcp://121.36.50.203:1883";
+    public static final String TOPIC1 = "12345678.rt";
     private static final String clientid = "yuxianyetest";
     private MqttClient client;
     private MqttConnectOptions options;
     private String userName = "yuxianye";    //非必须
-    private String passWord = "yuxianye";  //非必须
+    private String passWord = "gyzk@1q2w3E*";  //非必须
     private ScheduledExecutorService scheduler;
 
     private void start() {
@@ -44,7 +56,7 @@ public class ClientMQTT {
             MqttTopic topic = client.getTopic(TOPIC1);
             //setWill方法，如果项目中需要知道客户端是否掉线可以调用该方法。设置最终端口的通知消息
             //遗嘱
-            options.setWill(topic, "close".getBytes(), 1, true);
+            //options.setWill(topic, "close".getBytes(), 1, true);
             client.connect(options);
             //订阅消息
             int[] Qos = {1};//0：最多一次 、1：最少一次 、2：只有一次
@@ -62,9 +74,5 @@ public class ClientMQTT {
         }
     }
 
-    public static void main(String[] args) {
-        ClientMQTT client = new ClientMQTT();
-        client.start();
 
-    }
 }

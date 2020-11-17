@@ -1,3 +1,5 @@
+package mqttclient.src.main.java;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -62,28 +64,28 @@ public class PushCallback implements MqttCallback {
             }
             outputStream.write(message.getPayload());
             outputStream.close();
-            System.out.println("写入finish"+message.getPayload().length);
+            System.out.println(str+"写入完成，数据长度"+message.getPayload().length);
 
 
 //存入数据库
 
-                conn = DBConn.getConnection();
-                String sql = "INSERT INTO mqtt_msg (msgid,topic,node,qos,retain,payload,arrived) VALUES(?,?,?,?,?,?,?)";
-                ps = conn.prepareStatement(sql);
-                //设置占位符对应的值
-                ps.setString(1, str);
-                ps.setString(2, topic);
-                ps.setString(3, null);
-                ps.setInt(4, message.getQos());
-                ps.setString(5, null);
-                ps.setBytes(6, message.getPayload());
-                //ps.setDate(7, new java.sql.Date(date.getYear(),date.getMonth(),date.getDay(),date.getHours(),date.getSeconds(),date.getMinutes());
-
-
-                ps.setDate(7, new java.sql.Date(date.getYear(),date.getMonth(),date.getDay()));
-
-            int insertCount = ps.executeUpdate();
-                System.out.println((insertCount));
+//                conn = DBConn.getConnection();
+//                String sql = "INSERT INTO mqtt_msg (msgid,topic,node,qos,retain,payload,arrived) VALUES(?,?,?,?,?,?,?)";
+//                ps = conn.prepareStatement(sql);
+//                //设置占位符对应的值
+//                ps.setString(1, str);
+//                ps.setString(2, topic);
+//                ps.setString(3, null);
+//                ps.setInt(4, message.getQos());
+//                ps.setString(5, null);
+//                ps.setBytes(6, message.getPayload());
+//                //ps.setDate(7, new java.sql.Date(date.getYear(),date.getMonth(),date.getDay(),date.getHours(),date.getSeconds(),date.getMinutes());
+//
+//
+//                ps.setDate(7, new java.sql.Date(date.getYear(),date.getMonth(),date.getDay()));
+//
+//            int insertCount = ps.executeUpdate();
+//                System.out.println((insertCount));
 
 
         }catch(IOException e){
